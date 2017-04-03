@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    17:06:41 09/30/2016 
+-- Create Date:    16:39:16 10/04/2016 
 -- Design Name: 
--- Module Name:    Sumador - arq_Sumador 
+-- Module Name:    MUX - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -31,17 +31,25 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sumador is
+entity MUX is
     Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
            B : in  STD_LOGIC_VECTOR (31 downto 0);
+           Sc : in  STD_LOGIC;
            S : out  STD_LOGIC_VECTOR (31 downto 0));
-end Sumador;
+end MUX;
 
-architecture arq_Sumador of Sumador is
+architecture Behavioral of MUX is
 
 begin
+	process(A, B, Sc)
+	begin
+		if(Sc = '0') then
+			S <= A;
+		end if;
+		if(Sc = '1') then
+			S <= B;
+		end if;
+	end process;
 
-S <= A + B;
-
-end arq_Sumador;
+end Behavioral;
 

@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    17:06:41 09/30/2016 
+-- Create Date:    18:01:10 09/30/2016 
 -- Design Name: 
--- Module Name:    Sumador - arq_Sumador 
+-- Module Name:    ALU - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -31,17 +31,29 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sumador is
+entity ALU is
     Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
            B : in  STD_LOGIC_VECTOR (31 downto 0);
-           S : out  STD_LOGIC_VECTOR (31 downto 0));
-end Sumador;
+			  Sc : in STD_LOGIC_VECTOR(2 downto 0);
+           Result : out  STD_LOGIC_VECTOR (31 downto 0));
+end ALU;
 
-architecture arq_Sumador of Sumador is
+architecture Behavioral of ALU is
 
 begin
-
-S <= A + B;
-
-end arq_Sumador;
+process(A, B, Sc)
+begin
+	case Sc is
+		when "000" => Result <= A + B;
+		when "001" => Result <= A - B;
+		when "010" => Result <= A and B;
+		when "011" => Result <= A and not B;
+		when "100" => Result <= A or B;
+		when "101" => Result <= A or not B;
+		when "110" => Result <= A xor B;
+		when "111" => Result <= A xnor B;
+		when others => Result <= "00000000000000000000000000000000";
+	end case;
+end process;
+end Behavioral;
 

@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    17:06:41 09/30/2016 
+-- Create Date:    17:08:13 10/04/2016 
 -- Design Name: 
--- Module Name:    Sumador - arq_Sumador 
+-- Module Name:    PC - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -31,17 +31,24 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sumador is
-    Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
-           B : in  STD_LOGIC_VECTOR (31 downto 0);
-           S : out  STD_LOGIC_VECTOR (31 downto 0));
-end Sumador;
+entity PC is
+    Port ( Rst : in  STD_LOGIC;
+			  Clk : in STD_LOGIC;
+           Datain : in  STD_LOGIC_VECTOR (31 downto 0);
+           Dataout : out  STD_LOGIC_VECTOR (31 downto 0));
+end PC;
 
-architecture arq_Sumador of Sumador is
+architecture Behavioral of PC is
 
 begin
+	process(Rst, Clk, Datain)
+	begin
+		if(Rst = '1') then
+			DataOut <= (others => '0');
+		elsif(rising_edge(Clk)) then
+			DataOut <= Datain;
+		end if;
+	end process;
 
-S <= A + B;
-
-end arq_Sumador;
+end Behavioral;
 

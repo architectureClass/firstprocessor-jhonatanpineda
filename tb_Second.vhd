@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:08:16 09/30/2016
+-- Create Date:   18:09:11 04/03/2017
 -- Design Name:   
--- Module Name:   D:/Arquitectura/Componentes/Sumador/tb_Sumador.vhd
--- Project Name:  Sumador
+-- Module Name:   C:/Users/Pineda/Desktop/Presentacion/Procesador/tb_Second.vhd
+-- Project Name:  Procesador
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: Sumador
+-- VHDL Test Bench Created by ISE for module: Second
 -- 
 -- Dependencies:
 -- 
@@ -27,54 +27,65 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_arith.ALL;
+USE ieee.std_logic_unsigned.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_Sumador IS
-END tb_Sumador;
+ENTITY tb_Second IS
+END tb_Second;
  
-ARCHITECTURE behavior OF tb_Sumador IS 
+ARCHITECTURE behavior OF tb_Second IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT Sumador
+    COMPONENT Second
     PORT(
-         A : IN  std_logic_vector(31 downto 0);
-         B : IN  std_logic_vector(2 downto 0);
-         S : OUT  std_logic_vector(31 downto 0)
+         Clk : IN  std_logic;
+         Reset : IN  std_logic;
+         AluResult : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal A : std_logic_vector(31 downto 0) := (others => '0');
-   signal B : std_logic_vector(2 downto 0) := (others => '0');
+   signal Clk : std_logic := '0';
+   signal Reset : std_logic := '0';
 
  	--Outputs
-   signal S : std_logic_vector(31 downto 0);
-   -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
+   signal AluResult : std_logic_vector(31 downto 0);
 
+   -- Clock period definitions
+   constant Clk_period : time := 20 ns;
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: Sumador PORT MAP (
-          A => A,
-          B => B,
-          S => S
+   uut: Second PORT MAP (
+          Clk => Clk,
+          Reset => Reset,
+          AluResult => AluResult
         );
+
+   -- Clock process definitions
+   Clk_process :process
+   begin
+		Clk <= '0';
+		wait for Clk_period/2;
+		Clk <= '1';
+		wait for Clk_period/2;
+   end process;
+ 
 
    -- Stimulus process
    stim_proc: process
-   begin		
-		A <= "00000000000000000000000000000000";
-		B <= "100";
+   begin
+		Reset <= '1';
 		wait for 20 ns;
 		
-		A <= "00000000000000000000000000000100";
+		Reset <= '0';
       wait;
    end process;
 

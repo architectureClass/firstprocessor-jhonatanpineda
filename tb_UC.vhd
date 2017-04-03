@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:08:16 09/30/2016
+-- Create Date:   23:08:37 10/04/2016
 -- Design Name:   
--- Module Name:   D:/Arquitectura/Componentes/Sumador/tb_Sumador.vhd
--- Project Name:  Sumador
+-- Module Name:   D:/Arquitectura/Componentes/UC/tb_UC.vhd
+-- Project Name:  UC
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: Sumador
+-- VHDL Test Bench Created by ISE for module: UC
 -- 
 -- Dependencies:
 -- 
@@ -27,54 +27,78 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_arith.ALL;
+USE ieee.std_logic_unsigned.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_Sumador IS
-END tb_Sumador;
+ENTITY tb_UC IS
+END tb_UC;
  
-ARCHITECTURE behavior OF tb_Sumador IS 
+ARCHITECTURE behavior OF tb_UC IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT Sumador
+    COMPONENT UC
     PORT(
-         A : IN  std_logic_vector(31 downto 0);
-         B : IN  std_logic_vector(2 downto 0);
-         S : OUT  std_logic_vector(31 downto 0)
+         OP : IN  std_logic_vector(1 downto 0);
+         OP3 : IN  std_logic_vector(5 downto 0);
+         S : OUT  std_logic_vector(2 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal A : std_logic_vector(31 downto 0) := (others => '0');
-   signal B : std_logic_vector(2 downto 0) := (others => '0');
+   signal OP : std_logic_vector(1 downto 0) := (others => '0');
+   signal OP3 : std_logic_vector(5 downto 0) := (others => '0');
 
  	--Outputs
-   signal S : std_logic_vector(31 downto 0);
+   signal S : std_logic_vector(2 downto 0);
    -- No clocks detected in port list. Replace <clock> below with 
    -- appropriate port name 
-
- 
+  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: Sumador PORT MAP (
-          A => A,
-          B => B,
+   uut: UC PORT MAP (
+          OP => OP,
+          OP3 => OP3,
           S => S
         );
 
    -- Stimulus process
    stim_proc: process
    begin		
-		A <= "00000000000000000000000000000000";
-		B <= "100";
-		wait for 20 ns;
+      OP <= "10";
+		OP3 <= "000000";
+      wait for 20 ns;
 		
-		A <= "00000000000000000000000000000100";
+		OP3 <= "000100";
+      wait for 20 ns;	
+		
+		OP3 <= "000001";
+      wait for 20 ns;	
+		
+		OP3 <= "000010";
+      wait for 20 ns;	
+		
+		OP3 <= "000011";
+      wait for 20 ns;	
+		
+		OP3 <= "000111";
+      wait for 20 ns;	
+		
+		OP3 <= "100101";
+      wait for 20 ns;	
+		
+		OP3 <= "100110";
+      wait for 20 ns;	
+		
+		OP <= "11";
+      wait for 20 ns;	
+
       wait;
    end process;
 

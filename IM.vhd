@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    17:06:41 09/30/2016 
+-- Create Date:    14:28:12 10/05/2016 
 -- Design Name: 
--- Module Name:    Sumador - arq_Sumador 
+-- Module Name:    IM - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -21,6 +21,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_arith.ALL;
 use IEEE.STD_LOGIC_unsigned.ALL;
+use std.textio.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -31,17 +32,34 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sumador is
+entity IM is
     Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
-           B : in  STD_LOGIC_VECTOR (31 downto 0);
            S : out  STD_LOGIC_VECTOR (31 downto 0));
-end Sumador;
+end IM;
 
-architecture arq_Sumador of Sumador is
+architecture Behavioral of IM is
+
+type rom_type is array (0 to 63) of std_logic_vector (31 downto 0);
+		
+impure function InitRomFromFile (RomFileName : in string) return rom_type is
+	FILE RomFile : text open read_mode is RomFileName;
+	variable RomFileLine : line;
+	variable temp_bv : bit_vector(31 downto 0);
+	variable temp_mem : rom_type;
+	begin
+		for I in rom_type'range loop
+			readline (RomFile, RomFileLine);
+			read(RomFileLine, temp_bv);
+			temp_mem(i) := to_stdlogicvector(temp_bv);
+		end loop;
+	return temp_mem;
+end function;
+
+signal instructions : rom_type := InitRomFromFile("testJMPL.data");
 
 begin
 
-S <= A + B;
+		S <= instructions(conv_integer(A(5 downto 0)));
 
-end arq_Sumador;
+end Behavioral;
 

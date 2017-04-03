@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:08:16 09/30/2016
+-- Create Date:   14:34:25 10/05/2016
 -- Design Name:   
--- Module Name:   D:/Arquitectura/Componentes/Sumador/tb_Sumador.vhd
--- Project Name:  Sumador
+-- Module Name:   D:/Arquitectura/Componentes/IM/tb_IM.vhd
+-- Project Name:  IM
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: Sumador
+-- VHDL Test Bench Created by ISE for module: IM
 -- 
 -- Dependencies:
 -- 
@@ -27,22 +27,23 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
+USE ieee.std_logic_arith.ALL;
+USE ieee.std_logic_unsigned.ALL;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_Sumador IS
-END tb_Sumador;
+ENTITY tb_IM IS
+END tb_IM;
  
-ARCHITECTURE behavior OF tb_Sumador IS 
+ARCHITECTURE behavior OF tb_IM IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT Sumador
+    COMPONENT IM
     PORT(
          A : IN  std_logic_vector(31 downto 0);
-         B : IN  std_logic_vector(2 downto 0);
          S : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
@@ -50,30 +51,30 @@ ARCHITECTURE behavior OF tb_Sumador IS
 
    --Inputs
    signal A : std_logic_vector(31 downto 0) := (others => '0');
-   signal B : std_logic_vector(2 downto 0) := (others => '0');
 
  	--Outputs
    signal S : std_logic_vector(31 downto 0);
    -- No clocks detected in port list. Replace <clock> below with 
    -- appropriate port name 
-
+ 
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: Sumador PORT MAP (
+   uut: IM PORT MAP (
           A => A,
-          B => B,
           S => S
         );
 
    -- Stimulus process
    stim_proc: process
-   begin		
-		A <= "00000000000000000000000000000000";
-		B <= "100";
-		wait for 20 ns;
-		
+   begin			
+		A <= "00000000000000000000000000000001";
+      wait for 20 ns;	
+		A <= "00000000000000000000000000000010";
+      wait for 20 ns;	
+		A <= "00000000000000000000000000000011";
+      wait for 20 ns;	
 		A <= "00000000000000000000000000000100";
       wait;
    end process;

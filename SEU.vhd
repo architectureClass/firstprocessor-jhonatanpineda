@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    17:06:41 09/30/2016 
+-- Create Date:    16:47:12 10/04/2016 
 -- Design Name: 
--- Module Name:    Sumador - arq_Sumador 
+-- Module Name:    SEU - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -31,17 +31,21 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Sumador is
-    Port ( A : in  STD_LOGIC_VECTOR (31 downto 0);
-           B : in  STD_LOGIC_VECTOR (31 downto 0);
+entity SEU is
+    Port ( A : in  STD_LOGIC_VECTOR (12 downto 0);
            S : out  STD_LOGIC_VECTOR (31 downto 0));
-end Sumador;
+end SEU;
 
-architecture arq_Sumador of Sumador is
+architecture Behavioral of SEU is
 
 begin
+	process(A) 
+	begin
+		for I in 13 to 31 loop
+			S(I) <= '0' or A(12);
+		end loop;
+		S(12 downto 0) <= A(12 downto 0);
+	end process;
 
-S <= A + B;
-
-end arq_Sumador;
+end Behavioral;
 
